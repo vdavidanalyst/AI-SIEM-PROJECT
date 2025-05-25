@@ -19,7 +19,7 @@ from sib_api_v3_sdk.rest import ApiException
 class AlertManager:
     def __init__(self):
         """Brevo (Sendinblue) API configuration"""
-        self.api_key = "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"  # Replace with your actual Brevo API key
+        self.api_key = "API_KEY"  # Replace with your actual Brevo API key
         self.sender_email = "vdanalyst3@gmail.com"  # Must be verified in Brevo
         self.sender_name = "SIEM Alert System"
         self.recipients = ["security.alerts@yourdomain.com", "vdanalyst1@gmail.com"]
