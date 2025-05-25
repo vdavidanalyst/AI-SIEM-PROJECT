@@ -1,0 +1,51 @@
+services:
+  cowrie:
+    image: cowrie/cowrie:latest
+    ports:
+      - "22222:2222"
+      - "22233:2223"
+    volumes:
+      - ./cowrie-logs:/cowrie/cowrie-git/var/log/cowrie
+      - ./session-logs:/cowrie/cowrie-git/var/lib/cowrie/tty
+    restart: unless-stopped
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false       # Disable authentication
+      - xpack.security.http.ssl.enabled=false  # Disable HTTPS
+    ports:
+      - "9200:9200"
+    volumes:
+      - elastic-data:/usr/share/elasticsearch/data
+    networks:
+      - aisiemproject_default
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.12.0
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - aisiemproject_default
+
+  filebeat:
+    build:
+      context: .
+      dockerfile: Dockerfile.filebeat
+    volumes:
+      - ./cowrie-logs:/usr/share/filebeat/input:ro
+    networks:
+      - aisiemproject_default
+    depends_on:
+      - elasticsearch
+    # Removed volume mount for filebeat.yml as it's baked into the image
+
+networks:
+  aisiemproject_default:
+    driver: bridge
+
+volumes:
+  elastic-data:

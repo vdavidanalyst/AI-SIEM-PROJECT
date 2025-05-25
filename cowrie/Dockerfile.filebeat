@@ -1,0 +1,13 @@
+FROM docker.elastic.co/beats/filebeat:8.12.0
+
+# Copy your local filebeat.yml into the image
+COPY filebeat.yml /usr/share/filebeat/filebeat.yml
+
+# Switch to root to change file permissions
+USER root
+
+# Fix permissions to make the config file NOT group or world writable
+RUN chmod 644 /usr/share/filebeat/filebeat.yml
+
+# Switch back to filebeat user (security best practice)
+USER filebeat

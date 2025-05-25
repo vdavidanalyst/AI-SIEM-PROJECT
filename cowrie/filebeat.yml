@@ -1,0 +1,11 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /usr/share/filebeat/input/cowrie.json
+  json.keys_under_root: true
+
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+  indices:
+    - index: "cowrie-%{+yyyy.MM.dd}"
