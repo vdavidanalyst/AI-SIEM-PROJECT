@@ -117,7 +117,3 @@ Victor David Sarkibaka
 [GitHub](https://github.com/yourusername) | [LinkedIn](https://linkedin.com/in/yourprofile) | victor.baka16@gmail.com
 
 ---
-
-## 📜 License
-
-MIT License – see [LICENSE](LICENSE) for details.
